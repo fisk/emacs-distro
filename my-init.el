@@ -5,13 +5,191 @@
 (setq inhibit-splash-screen t)
 
 (require 'package)
+(require 'prelude-packages)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
+defvar my-packages
+  '(ace-jump-mode
+    ack
+    ag
+    s
+    dash
+    anzu
+    auto-complete-c-headers
+    auto-complete
+    popup
+    auto-complete-clang
+    auto-complete
+    popup
+    better-defaults
+    buffer-move
+    color-theme-sanityinc-solarized
+    color-theme-solaried
+    color-theme
+    company-irony
+    irony
+    company
+    dash-functional
+    dash
+    diminish
+    dired+
+    dirtree
+    windata
+    tree-mode
+    drag-stuff
+    ecb
+    ecb-snapshot
+    elisp-slime-nav
+    elscreen
+    eshell-prompt-extras
+    evil-leader
+    evil
+    goto-chg
+    undo-tree
+    exec-path-from-shell
+    f
+    dash
+    s
+    find-file-in-project
+    swiper
+    fiplr
+    grizzl
+    flx-ido
+    flx
+    flycheck-color-mode-line
+    dash
+    flycheck
+    seq
+    let-alist
+    pkg-info
+    epl
+    dash
+    flycheck-irony
+    irony
+    flycheck
+    seq
+    let-alist
+    pkg-info
+    epl
+    dash
+    flyspell-lazy
+    git-commit-mode
+    git-rebase-mode
+    goto-chg
+    grizzl
+    helm-ag
+    helm
+    helm-core
+    async
+    async
+    helm-ag-r
+    helm
+    helm-core
+    async
+    async
+    helm-git
+    helm-make
+    projectile
+    pkg-info
+    epl
+    dash
+    helm
+    helm-core
+    async
+    async
+    helm-projectile
+    dash
+    projectile
+    pkg-info
+    epl
+    dash
+    helm
+    helm-core
+    async
+    async
+    highlight-symbol
+    iedit
+    irony
+    latex-extra
+    auctex
+    latex-pretty-symbols
+    let-alist
+    load-theme-buffer-local
+    magit-filenotify
+    magit
+    magit-popup
+    dash
+    async
+    git-commit
+    with-editor
+    dash
+    async
+    dash
+    with-editor
+    dash
+    async
+    dash
+    async
+    magit-popup
+    dash
+    async
+    monky
+    move-line
+    move-text
+    multi-eshell
+    multiple-cursors
+    neotree
+    nlinum
+    noflet
+    popup-complete
+    popup
+    popwin
+    projectile
+    pkg-info
+    epl
+    dash
+    rich-minority
+    rtags
+    s
+    seq
+    slime
+    solarized-theme
+    dash
+    swiper
+    tabbar-ruler
+    tabbar
+    tree-mode
+    undo-tree
+    wgrep-ag
+    wgrep
+    wgrep-helm
+    wgrep
+    windata
+    with-editor
+    dash
+    async yasnippet)
+  "A list of packages to ensure are installed at launch.")
+
+(defun install-my-packages ()
+  "Install all packages listed in `my-packages'."
+  (unless (my-packages-installed-p)
+    ;; check for new packages (package versions)
+    (message "%s" "Emacs is now refreshing its package database...")
+    (package-refresh-contents)
+    (message "%s" " done.")
+    ;; install the missing packages
+    (prelude-require-packages my-packages)))
+
+;; run package installation
+(install-my-packages)
+
 ;; activate installed packages
 (package-initialize)
+
+(provide 'my-packages)
 
 (setq url-http-attempt-keepalives nil)
 
