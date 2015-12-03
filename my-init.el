@@ -11,7 +11,7 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-defvar my-packages
+(defvar my-packages
   '(ace-jump-mode
     ack
     ag
@@ -27,7 +27,7 @@ defvar my-packages
     better-defaults
     buffer-move
     color-theme-sanityinc-solarized
-    color-theme-solaried
+    color-theme-solarized
     color-theme
     company-irony
     irony
@@ -64,7 +64,6 @@ defvar my-packages
     flycheck
     seq
     let-alist
-    pkg-info
     epl
     dash
     flycheck-irony
@@ -72,12 +71,9 @@ defvar my-packages
     flycheck
     seq
     let-alist
-    pkg-info
     epl
     dash
     flyspell-lazy
-    git-commit-mode
-    git-rebase-mode
     goto-chg
     grizzl
     helm-ag
@@ -108,8 +104,6 @@ defvar my-packages
     dash
     helm
     helm-core
-    async
-    async
     highlight-symbol
     iedit
     irony
@@ -170,8 +164,13 @@ defvar my-packages
     windata
     with-editor
     dash
-    async yasnippet)
+    async
+	yasnippet)
   "A list of packages to ensure are installed at launch.")
+
+(defun my-packages-installed-p ()
+  "Check if all packages in `prelude-packages' are installed."
+  (every #'package-installed-p my-packages))
 
 (defun install-my-packages ()
   "Install all packages listed in `my-packages'."
@@ -258,13 +257,13 @@ defvar my-packages
 (global-set-key [remap goto-line] 'goto-line-with-feedback)
 
 (defun goto-line-with-feedback ()
-	"Show line numbers temporarily, while prompting for the line number input"
-	(interactive)
-	(unwind-protect
-		(progn
-			(nlinum-mode 1)
-			(goto-line (read-number "Goto line: ")))
-	    (nlinum-mode -1)))
+  "Show line numbers temporarily, while prompting for the line number input"
+  (interactive)
+  (unwind-protect
+  (progn
+  (nlinum-mode 1)
+  (goto-line (read-number "Goto line: ")))
+  (nlinum-mode -1)))
 
 ;; make sure to have downloaded archive description.
 ;; Or use package-archive-contents as suggested by Nicolas Dudebout
@@ -844,7 +843,7 @@ Optional arg REVISION is a revision to annotate from."
 ;; Style powerline
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-to-list 'load-path "~/.emacs.d/vendor/powerline/")
+(add-to-list 'load-path "~/.emacs.d/personal/emacs-distro/vendor/powerline/")
 (require 'powerline)
 (require 'tramp)
 
