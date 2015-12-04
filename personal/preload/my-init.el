@@ -10,7 +10,7 @@
 (prelude-require-packages
   '(ace-jump-mode
     emacs-eclim
-	powerline
+    powerline
     ack
     ag
     s
@@ -41,8 +41,9 @@
     elisp-slime-nav
     elscreen
     eshell-prompt-extras
-    evil-leader
     evil
+    evil-leader
+    evil-mc
     goto-chg
     undo-tree
     exec-path-from-shell
@@ -598,7 +599,10 @@ Optional arg REVISION is a revision to annotate from."
 
 (require 'evil-integration)
 (require 'evil-leader)
+(require 'evil-mc)
 (require 'evil)
+
+(global-evil-mc-mode 1)
 
 (define-key evil-normal-state-map (kbd "RET") 'neotree-enter)
 
