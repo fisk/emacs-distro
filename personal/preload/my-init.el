@@ -1067,7 +1067,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq-default tab-width 2)
 (setq-default c-basic-offset 2)
 (setq indent-line-function 'insert-tab)
-
+(setq beacon-color "#202060")
 
 (add-hook 'java-mode-hook (lambda ()
                             (setq c-basic-offset 4
