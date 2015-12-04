@@ -1,17 +1,16 @@
-;;; My own emacs config stuff
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; My emacs config file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq inhibit-splash-screen t)
 
-(setq prelude-theme 'solarized-dark)
+(setq prelude-theme 'solarized)
 (require 'prelude-packages)
 
 (prelude-require-packages
   '(ace-jump-mode
     emacs-eclim
+	powerline
     ack
     ag
     s
@@ -162,7 +161,7 @@
     with-editor
     dash
     async
-	yasnippet))
+    yasnippet))
 
 ;; random stuff
 
@@ -450,61 +449,6 @@ Optional arg REVISION is a revision to annotate from."
 
 (set-process-query-on-exit-flag rtags-diagnostics-process nil)
 (add-hook 'kill-emacs-hook (lambda () (rtags-stop-diagnostics)))
-
-;; (add-hook 'c++-mode-hook 'company-mode)
-;; (add-hook 'c-mode-hook 'company-mode)
-;; (add-hook 'objc-mode-hook 'company-mode)
-
-
-
-;(require 'irony-flycheck)
-
-;; (setq-default c-basic-offset 2 c-default-style "linux")
-;; (setq-default tab-width 2 indent-tabs-mode t)
-;; (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
-;;
-;; (add-hook 'c++-mode-hook 'irony-mode)
-;; (add-hook 'c-mode-hook 'irony-mode)
-;; (add-hook 'objc-mode-hook 'irony-mode)
-;;
-;; (add-hook 'c++-mode-hook 'flycheck-mode)
-;; (add-hook 'c-mode-hook 'flycheck-mode)
-;; (add-hook 'objc-mode-hook 'flycheck-mode)
-;;
-;; ;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; ;; irony-mode's buffers by irony-mode's function
-;; (defun my-irony-mode-hook ()
-;; 	(define-key irony-mode-map [remap completion-at-point]
-;; 		'irony-completion-at-point-async)
-;; 	(define-key irony-mode-map [remap complete-symbol]
-;; 		'irony-completion-at-point-async))
-;;
-;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-;;
-;; (eval-after-load 'company
-;; 	'(add-to-list 'company-backends 'company-irony))
-;;
-;; ;; (optional) adds CC special commands to `company-begin-commands' in order to
-;; ;; trigger completion at interesting places, such as after scope operator
-;; ;;     std::|
-;; (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-;;
-;; (eval-after-load 'flycheck
-;; 	'(add-to-list 'flycheck-checkers 'irony))
-;;
-;; (require 'flycheck-color-mode-line)
-;;
-;; (eval-after-load "flycheck"
-;; 	'(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
-
-;;;;; activate ecb
-;;(require 'ecb)
-;;;;(require 'ecb-autoloads)
-;;
-;;;; replace C-S-<return> with a key binding that you want
-;;(require 'auto-complete-clang)
-;;(define-key c++-mode-map (kbd "C-S-<return>") 'ac-complete-clang)
 
 (show-paren-mode t)
 
@@ -796,6 +740,8 @@ Optional arg REVISION is a revision to annotate from."
 ;; Main theme
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq custom-safe-themes t)
+
 ;; make the fringe stand out from the background
 (setq solarized-distinct-fringe-background t)
 
@@ -806,8 +752,7 @@ Optional arg REVISION is a revision to annotate from."
 (setq frame-background-mode 'dark)
 
 ;; set dark theme
-(load-theme 'solarized-dark)
-(load-theme 'solarized-dark)
+(load-theme 'solarized)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Style powerline
@@ -818,6 +763,7 @@ Optional arg REVISION is a revision to annotate from."
 (require 'tramp)
 
 (setq powerline-evil-tag-style 'verbose)
+(setq powerline-default-separator 'utf-8)
 
 (defcustom powerline-evil-tag-style 'visual-expanded
   "The style to use for displaying the evil state tag.
@@ -1009,15 +955,15 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
                                                           powerline-default-separator
                                                           (car powerline-default-separator-dir))))
                           (separator-right (intern (format "powerline-%s-%s"
-                                                           powerline-default-separator
-                                                           (cdr powerline-default-separator-dir))))
+                                                          powerline-default-separator
+                                                          (cdr powerline-default-separator-dir))))
                           (lhs (list
                                      (if (and active evil-mode)
                                          (concat
                                           (powerline-raw " " evil-face 'l)
                                           (powerline-raw (powerline-evil-tag) evil-face)
                                           (powerline-raw " " evil-face 'l)
-                                          (funcall separator-left face-reverse1 evil-reverse-face)
+                                          (funcall separator-left evil-face face1)
                                        ))
                                      (powerline-raw " " mode-line 'l)
                                      (when (buffer-modified-p)
@@ -1030,23 +976,23 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
                                      (when (boundp 'erc-modified-channels-object)
                                        (powerline-raw erc-modified-channels-object face1 'l))
                                      (powerline-raw " " mode-line 'l)
-                                     (funcall separator-left face-reverse2 face-reverse1)
+                                     (funcall separator-left face1 face2)
                                      (powerline-raw (fisk-vc-info) face2)
                                      (powerline-raw " " face2 'l)
                                      ;(powerline-buffer-id `(mode-line-buffer-id face2) face2)
                                      ;(powerline-buffer-id buffer-id-face 'l)
                                      (powerline-raw (file-name-nondirectory buffer-file-name) buffer-id-face 'l)
                                      (powerline-raw " " face2 'l)
-                                     (funcall separator-left face-reverse1 face-reverse2)
+                                     (funcall separator-left face2 face1)
                                    ))
                           (rhs (list
-                                     (funcall separator-right face-reverse2 face-reverse1)
+                                     (funcall separator-right face1 face2)
                                      (powerline-raw "[" face2 'l)
                                      (powerline-minor-modes face2)
                                      (powerline-raw "%n" face2)
                                      (powerline-raw "]" face2)
                                      (powerline-raw " " face2 'l)
-                                     (funcall separator-right evil-reverse-face face-reverse2)
+                                     (funcall separator-right face2 evil-face)
 
                                      (powerline-raw "[" evil-face 'l)
                                      (powerline-major-mode evil-face)
@@ -1113,3 +1059,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (custom-set-faces (if (not window-system) '(default ((t (:background "nil"))))))
 
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default c-basic-offset 2)
+(setq indent-line-function 'insert-tab)
+
+
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-basic-offset 4
+                                  tab-width 4
+                                  indent-tabs-mode t)))
