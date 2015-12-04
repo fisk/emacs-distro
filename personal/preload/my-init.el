@@ -1,18 +1,17 @@
+;;; My own emacs config stuff
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; My emacs config file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq inhibit-splash-screen t)
 
-(require 'package)
+(setq prelude-theme 'solarized-dark)
 (require 'prelude-packages)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-(defvar my-packages
+(prelude-require-packages
   '(ace-jump-mode
+    emacs-eclim
     ack
     ag
     s
@@ -26,8 +25,6 @@
     popup
     better-defaults
     buffer-move
-    color-theme-sanityinc-solarized
-    color-theme-solarized
     color-theme
     company-irony
     irony
@@ -165,32 +162,7 @@
     with-editor
     dash
     async
-	yasnippet)
-  "A list of packages to ensure are installed at launch.")
-
-(defun my-packages-installed-p ()
-  "Check if all packages in `prelude-packages' are installed."
-  (every #'package-installed-p my-packages))
-
-(defun install-my-packages ()
-  "Install all packages listed in `my-packages'."
-  (unless (my-packages-installed-p)
-    ;; check for new packages (package versions)
-    (message "%s" "Emacs is now refreshing its package database...")
-    (package-refresh-contents)
-    (message "%s" " done.")
-    ;; install the missing packages
-    (prelude-require-packages my-packages)))
-
-;; run package installation
-(install-my-packages)
-
-;; activate installed packages
-(package-initialize)
-
-(provide 'my-packages)
-
-(setq url-http-attempt-keepalives nil)
+	yasnippet))
 
 ;; random stuff
 
@@ -275,8 +247,6 @@
 
 ;; anzu mode for showing number of search hits
 (global-anzu-mode +1)
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 
 ;; Save point position between sessions
 (require 'saveplace)
@@ -1140,3 +1110,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ; Set cursor color to white
 (set-cursor-color "#ffffff")
+
+(custom-set-faces (if (not window-system) '(default ((t (:background "nil"))))))
+
