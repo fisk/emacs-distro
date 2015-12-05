@@ -195,7 +195,7 @@
 (exec-path-from-shell-copy-env "CLICOLOR")
 (exec-path-from-shell-copy-env "CLICOLOR_FORCE")
 
-(setq shell-file-name "bash")
+(setq shell-file-name "zsh")
 (setenv "SHELL" shell-file-name)
 (setq explicit-shell-file-name  shell-file-name) ; Interactive shell
 (setq ediff-shell               shell-file-name)    ; Ediff shell
