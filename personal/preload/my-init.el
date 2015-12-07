@@ -349,10 +349,6 @@ Optional arg REVISION is a revision to annotate from."
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq mouse-wheel-progressive-speed t)
 
-;; General tweaks
-(setq default-tab-width 2)
-(setq-default indent-tabs-mode nil)
-
 ;(transient-mark-mode t)
 
 ;; ido
@@ -617,6 +613,8 @@ Optional arg REVISION is a revision to annotate from."
 
 (define-key evil-normal-state-map [escape] 'keyboard-quit)
 (define-key evil-visual-state-map [escape] 'keyboard-quit)
+
+(define-key evil-visual-state-map (kbd "TAB") 'indent-region)
 
 (define-key evil-motion-state-map (kbd "C-j c") #'evil-ace-jump-char-mode)
 (define-key evil-motion-state-map (kbd "C-j w") #'evil-ace-jump-word-mode)
@@ -1063,13 +1061,31 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (custom-set-faces (if (not window-system) '(default ((t (:background "nil"))))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Whitespaces
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq beacon-color "#202060")
+
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default c-basic-offset 2)
-(setq indent-line-function 'insert-tab)
-(setq beacon-color "#202060")
 
 (add-hook 'java-mode-hook (lambda ()
                             (setq c-basic-offset 4
                                   tab-width 4
+								  indent-line-function 'insert-tab
                                   indent-tabs-mode t)))
+
+(defun my-c-mode-hook ()
+    (setq c-basic-offset 2
+	      tab-width 2
+		  indent-tabs-mode nil))
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+
+(defun my-cxx-mode-hook ()
+    (setq c-basic-offset 2
+	      tab-width 2
+		  indent-tabs-mode nil))
+(add-hook 'c++-mode-hook 'my-cxx-mode-hook)
+
